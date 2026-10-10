@@ -1,0 +1,107 @@
+-- Roblox Skybox + Music Panel (Joann_haker.lua)
+local Lighting = game:GetService("Lighting")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local SKYBOX_IMAGE_ID = "rbxassetid://7057923079"
+local SPOOKY_SOUND_ID = "1843404008"
+
+-- Crear objeto de sonido
+local sound = Instance.new("Sound")
+sound.Name = "PanelSound"
+sound.SoundId = "rbxassetid://" .. SPOOKY_SOUND_ID
+sound.Volume = 2
+sound.Looped = true
+sound.Parent = workspace
+
+-- Función para cambiar Skybox
+local function cambiarSkybox(id)
+    Lighting:ClearAllChildren()
+    local sky = Instance.new("Sky")
+    sky.Name = "CustomSkybox"
+    sky.SkyboxBk = id
+    sky.SkyboxDn = id
+    sky.SkyboxFt = id
+    sky.SkyboxLf = id
+    sky.SkyboxRt = id
+    sky.SkyboxUp = id
+    sky.Parent = Lighting
+end
+
+-- GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "JoannHakerPanel"
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 240, 0, 220)
+Frame.Position = UDim2.new(0.35, 0, 0.3, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Title.Text = "JOANN HAKER PANEL"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 18
+Title.Parent = Frame
+
+-- Botón Skybox
+local SkyBtn = Instance.new("TextButton")
+SkyBtn.Size = UDim2.new(0.85, 0, 0, 38)
+SkyBtn.Position = UDim2.new(0.075, 0, 0.22, 0)
+SkyBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+SkyBtn.Text = "Activar Skybox Cara"
+SkyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SkyBtn.Font = Enum.Font.SourceSansBold
+SkyBtn.TextSize = 15
+SkyBtn.Parent = Frame
+
+SkyBtn.MouseButton1Click:Connect(function()
+    cambiarSkybox(SKYBOX_IMAGE_ID)
+end)
+
+-- Botón Play Música
+local PlayBtn = Instance.new("TextButton")
+PlayBtn.Size = UDim2.new(0.4, 0, 0, 35)
+PlayBtn.Position = UDim2.new(0.075, 0, 0.45, 0)
+PlayBtn.BackgroundColor3 = Color3.fromRGB(40, 160, 40)
+PlayBtn.Text = "Play Spooky"
+PlayBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayBtn.Font = Enum.Font.SourceSansBold
+PlayBtn.Parent = Frame
+
+PlayBtn.MouseButton1Click:Connect(function()
+    sound:Play()
+end)
+
+-- Botón Stop Música
+local StopBtn = Instance.new("TextButton")
+StopBtn.Size = UDim2.new(0.4, 0, 0, 35)
+StopBtn.Position = UDim2.new(0.525, 0, 0.45, 0)
+StopBtn.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
+StopBtn.Text = "Stop Música"
+StopBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+StopBtn.Font = Enum.Font.SourceSansBold
+StopBtn.Parent = Frame
+
+StopBtn.MouseButton1Click:Connect(function()
+    sound:Stop()
+end)
+
+-- Botón Cerrar
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0.85, 0, 0, 32)
+CloseBtn.Position = UDim2.new(0.075, 0, 0.70, 0)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+CloseBtn.Text = "Cerrar Panel"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Parent = Frame
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
